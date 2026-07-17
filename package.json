@@ -21,5 +21,8 @@
   "scripts": {
     "prepare": "husky",
     "format": "prettier . --write"
+  },
+  "dependencies": {
+    "fastify": "^5.10.0"
   }
 }
