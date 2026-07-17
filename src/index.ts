@@ -5,7 +5,7 @@ const server = Fastify({
 });
 
 server.listen(
-  { port: Number(process.env.PORT), host: process.env.APP_HOST },
+  { port: Number(process.env.APP_PORT), host: process.env.APP_HOST },
   (err) => {
     if (err) {
       server.log.error(err);
