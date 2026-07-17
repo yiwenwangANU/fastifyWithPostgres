@@ -4,14 +4,22 @@
   "type": "module",
   "private": true,
   "devDependencies": {
+    "@commitlint/cli": "^21.2.1",
+    "@commitlint/config-conventional": "^21.2.0",
     "@eslint/js": "^10.0.1",
     "@types/bun": "latest",
     "eslint": "^10.7.0",
     "globals": "^17.7.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.8",
     "prettier": "3.9.5",
     "typescript-eslint": "^8.64.0"
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "scripts": {
+    "prepare": "husky",
+    "format": "prettier . --write"
   }
 }
