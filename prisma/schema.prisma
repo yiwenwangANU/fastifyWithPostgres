@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -11,3 +6,41 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Profile {
+  id          BigInt      @id @default(autoincrement()) @db.BigInt
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  userName    String      @unique @db.VarChar(50)
+  fullName    String      @db.VarChar(100)
+  description String?     @db.VarChar(250)
+  region      String?     @db.VarChar(50)
+  mainUrl     String?     @db.VarChar(250)
+  avatar      Bytes?      @db.ByteA
+  messages    Message[]
+  followers   Follow[]    @relation("Follower")
+  followed   Follow[]    @relation("Followed")
+}
+
+model Follow {
+  id          BigInt      @id @default(autoincrement()) @db.BigInt
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  followerId  BigInt
+  followedId  BigInt
+  follower    Profile     @relation("Follower", fields: [followerId], references: [id], onDelete: Cascade)
+  followed    Profile     @relation("Followed", fields: [followedId], references: [id], onDelete: Cascade)
+  @@unique([followerId, followedId])
+}
+
+model Message {
+  id          BigInt      @id @default(autoincrement()) @db.BigInt
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  authorId    BigInt
+  author      Profile     @relation(fields: [authorId], references: [id])
+  body        String      @db.VarChar(250)
+  likes       Int         @default(0)
+  image       Bytes?      @db.ByteA
+}
+
