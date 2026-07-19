@@ -8,11 +8,13 @@
     "@commitlint/config-conventional": "^21.2.0",
     "@eslint/js": "^10.0.1",
     "@types/bun": "latest",
+    "@types/pg": "^8.20.0",
     "eslint": "^10.7.0",
     "globals": "^17.7.0",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.8",
     "prettier": "3.9.5",
+    "prisma": "^7.8.0",
     "typescript-eslint": "^8.64.0"
   },
   "peerDependencies": {
@@ -23,6 +25,9 @@
     "format": "prettier . --write"
   },
   "dependencies": {
-    "fastify": "^5.10.0"
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "fastify": "^5.10.0",
+    "pg": "^8.22.0"
   }
 }
