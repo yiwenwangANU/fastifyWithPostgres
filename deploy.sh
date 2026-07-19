@@ -1,3 +1,5 @@
-docker compose down -v --rmi all --remove-orphans
 
-docker composer up -d --build
+set -euo pipefail
+
+docker compose down -v --remove-orphans
+docker compose up -d --build
