@@ -2,12 +2,10 @@ FROM oven/bun:latest
 
 WORKDIR /app
 
-COPY package.json bun.lock ./
+COPY . .
 
 RUN bun install --frozen-lockfile
 
-COPY src ./src
-
 EXPOSE 8080
 
-CMD ["bun", "run", "./src/index.ts"]
+CMD ["sh", "-c", "bun run db:deploy && bun run dev"]
