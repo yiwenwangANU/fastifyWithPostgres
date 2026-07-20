@@ -19,7 +19,7 @@ model Profile {
   avatar      Bytes?      @db.ByteA
   messages    Message[]
   followers   Follow[]    @relation("Follower")
-  followed   Follow[]    @relation("Followed")
+  followed    Follow[]    @relation("Followed")
 }
 
 model Follow {
@@ -34,13 +34,28 @@ model Follow {
 }
 
 model Message {
-  id          BigInt      @id @default(autoincrement()) @db.BigInt
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  authorId    BigInt
-  author      Profile     @relation(fields: [authorId], references: [id])
-  body        String      @db.VarChar(250)
-  likes       Int         @default(0)
-  image       Bytes?      @db.ByteA
+  id                            BigInt      @id @default(autoincrement()) @db.BigInt
+  createdAt                     DateTime    @default(now())
+  updatedAt                     DateTime    @updatedAt
+  authorId                      BigInt
+  author                        Profile     @relation(fields: [authorId], references: [id])
+  body                          String      @db.VarChar(250)
+  likes                         Int         @default(0)
+  image                         Bytes?      @db.ByteA
+  replies                       Message[]   @relation("replies")
+  replyToId                     BigInt?      
+  replyTo                       Message?    @relation("replies", fields: [replyToId], references: [id])
+  broadcasterMessageBroadcasts  MessageBroadcast[]  @relation("BroadcasterMessageBroadcast")
+  broadcastMessageBroadcasts    MessageBroadcast[]  @relation("BroadcastMessageBroadcast")
 }
 
+model MessageBroadcast {
+  id                  BigInt    @id  @default(autoincrement()) @db.BigInt
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt 
+  broadcasterMsg      Message   @relation("BroadcasterMessageBroadcast", fields: [broadcasterMsgId], references: [id])
+  broadcasterMsgId    BigInt
+  broadcastMsg        Message   @relation("BroadcastMessageBroadcast", fields: [broadcastMsgId], references: [id])
+  broadcastMsgId      BigInt
+  additionalMessage   String?   @db.VarChar(140)
+}
